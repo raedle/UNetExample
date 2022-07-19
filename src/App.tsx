@@ -56,7 +56,7 @@ function ImageMask() {
     ctx.clear();
     await ctx.invalidate();
 
-    // Detect objects in image
+    // Salient object detection as masks
     const images = await imageMask(model, image);
 
     // Render the image masks on the canvas in a simple grid

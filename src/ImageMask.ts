@@ -1,34 +1,18 @@
 import { Alert } from "react-native";
 import { Image, media, Module, Tensor, torch, torchvision } from "react-native-pytorch-core";
 
-// Original source: https://github.com/pytorch/android-demo-app/blob/master/ObjectDetection/app/src/main/java/org/pytorch/demo/objectdetection/PrePostProcessor.java
-// The code was adjusted to match PyTorch Live API
-
 // The image size is defined by the expected model input.
 const IMAGE_SIZE = 224;
 
-// Helper type to store left, top, right, bottom bounds
-type Rect = [number, number, number, number];
-
-type BoundingBox = {
-  // The detected object label
-  label: string,
-  // The confidence score
-  score: number,
-  // The object bounds
-  rect: Rect,
-}
-
 /**
- * Detect objects in an image. The model needs to be a PyTorch model loaded in
- * the lite interpreter runtime and be compatible with the implemented
- * preprocessing and postprocessing steps.
+ * Salient object detection in an image. The model needs to be a PyTorch model
+ * loaded in the lite interpreter runtime and be compatible with the
+ * implemented preprocessing and postprocessing steps.
  *
  * @param model Model loaded for lite interpreter runtime.
  * @param image Image object either from the camera or loaded via url or
  * bundle.
- * @returns Detected objects with their score, label, and bounds (left, top,
- * right, bottom).
+ * @returns Salient object detection as RGB image mask.
  */
 export async function imageMask(model: Module, image: Image): Promise<Image[]> {
   // BEGIN: Capture performance measure for preprocessing
